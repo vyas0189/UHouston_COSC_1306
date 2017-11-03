@@ -1,0 +1,815 @@
+#Program1: Exercise from Extra.pdf (1)
+
+#The program asks the user to write a sentence and then presents a histogram of the words
+print('Program1 Extra. The program asks the user to write a sentence and then presents a histogram of the words')
+print('\n')
+
+text = input('Enter your sentence: ')
+
+def list_words(text):
+    # We need to split the sentence in words
+    words = text.split()
+    # Now we have a  list of words and we are going to evaluate each word
+    for word in words:
+        # We will get the length of each word
+        count = len(word)
+        # Now we are going to display each word and it's length in *
+        print('{:10}{:10}'.format(word.upper(), count*'*'))
+
+list_words(text)
+
+______________________________________________________________________________
+
+#Program2: Exercise from Extra.pdf (2)
+
+#The program asks the user for a word from 3 to 13 letters. With the entered word, create an X where the middle letter only prints once
+
+print('Program2 Extra. The program asks the user for a word from 3 to 13 letters. With the entered word, create an X where the middle letter only prints once.')
+print('\n')
+
+word = input('Enter a word that is odd and between 3 and 13 characters: ')
+
+length = len(word)
+
+def wordX(word):
+  # we are going to iterate for each letter in the word
+  for letter in word:
+    # We need the letter index so we can calculate how many spaces we will need 
+    letterIn = word.index(letter)
+    # the length divided by 2 is always going to give us the index of the middle letter, we don't need reminders
+    # or decimal points, that is why we use //
+    middleLetter = length // 2
+    # We are going to use the letter index as the first space so we can get a diagonal line
+    firstSpace = letterIn
+    secondSpace = length // 2 - letterIn
+    # We are going to build the X
+    if length == 3 or length >= 7 and length <= 11:
+      space = (letterIn - ( 2 * (length // 2) - letterIn) - length // 2) + (middleLetter % 3)
+      if letterIn < middleLetter - 1:
+        print('{} {} {} {}'.format(firstSpace*' ', letter, ((secondSpace - firstSpace) + (middleLetter % 3))*' ', letter))
+      elif letterIn == middleLetter - 1:
+        print('{} {} {}'.format(firstSpace*' ', letter, letter))
+      elif letterIn == middleLetter:
+        print('{} {}'.format(firstSpace*' ', letter))
+      elif letterIn == middleLetter + 1:
+        print('{} {} {}'.format((secondSpace + middleLetter)*' ', letter, letter))
+      elif letterIn > middleLetter + 1:
+        print('{} {} {} {}'.format((secondSpace + middleLetter)*' ', letter, space*' ', letter))
+    elif length == 5:
+      space = (letterIn - ( 2 * (length // 2) - letterIn) - length // 2) - 1
+      if letterIn < middleLetter - 1:
+        print('{} {} {} {}'.format(firstSpace*' ', letter, ((secondSpace - firstSpace) - 1)*' ', letter))
+      elif letterIn == middleLetter - 1:
+        print('{} {} {}'.format(firstSpace*' ', letter, letter))
+      elif letterIn == middleLetter:
+        print('{} {}'.format(firstSpace*' ', letter))
+      elif letterIn == middleLetter + 1:
+        print('{} {} {}'.format((secondSpace + middleLetter)*' ', letter, letter))
+      elif letterIn > middleLetter + 1:
+        print('{} {} {} {}'.format((secondSpace + middleLetter)*' ', letter, space*' ', letter))
+    elif length == 13:
+      space = (letterIn - ( 2 * (length // 2) - letterIn) - length // 2) + 3
+      if letterIn < middleLetter - 1:
+        print('{} {} {} {}'.format(firstSpace*' ', letter, ((secondSpace - firstSpace) + 3)*' ', letter))
+      elif letterIn == middleLetter - 1:
+        print('{} {} {}'.format(firstSpace*' ', letter, letter))
+      elif letterIn == middleLetter:
+        print('{} {}'.format(firstSpace*' ', letter))
+      elif letterIn == middleLetter + 1:
+        print('{} {} {}'.format((secondSpace + middleLetter)*' ', letter, letter))
+      elif letterIn > middleLetter + 1:
+        print('{} {} {} {}'.format((secondSpace + middleLetter)*' ', letter, space*' ', letter))
+
+# If the word entered by the user meet the specifications we will call the function               
+if length >= 3 and length <= 13 and length % 2 == 1:
+    wordX(word)
+# If not we will tell the user what is wrong with the word
+else:
+    if length < 3:
+      print('Word too short!')
+    elif length > 13:
+      print('Word too long!')
+    elif length % 2 != 1:
+      print('Word need to be odd!')
+
+______________________________________________________________________________
+
+#Program3: Exercise from Extra.pdf (3)
+
+#The program finds all the possible two numbers that when being multiplied are also in the result
+print('Program3 Extra. The program finds all the possible two numbers that when being multiplied are also in the result')
+print('\n')
+
+#variable to control if the number of digits provided by the user is allowed
+isASupportedDigitNumber = True
+
+numberOfDigits = int(input("Please enter the numbe of digits for the result (4, 6 or 8): "))
+
+if ( numberOfDigits == 4 ) :
+  # taking into consideration that the numbers being multiplied are half the digits than the result 
+  # we can get the below information
+  # number of digits -> 4
+  # number of digits for each multiplier -> 2
+  # minimun number available with 2 digits for each multiplier
+  minMultiplier = 10
+  # maximun number available with 2 digits for each multiplier
+  maxMultiplier = 99
+  # minimun number available with 4 digits for the result
+  minNumberForSelectedDigits = 1000
+elif ( numberOfDigits == 6 ) :
+  # taking into consideration that the numbers being multiplied are half the digits than the result 
+  # we can get the below information
+  # number of digits -> 6
+  # number of digits for each multiplier -> 3
+  # minimun number available with 3 digits for each multiplier
+  minMultiplier = 100
+  # maximun number available with 3 digits for each multiplier
+  maxMultiplier = 999
+  # minimun number available with 6 digits for the result
+  minNumberForSelectedDigits = 100000  
+elif ( numberOfDigits == 8 ) :
+  # taking into consideration that the numbers being multiplied are half the digits than the result 
+  # we can get the below information
+  # number of digits -> 8
+  # number of digits for each multiplier -> 4
+  # minimun number available with 4 digits for each multiplier
+  minMultiplier = 1000
+  # maximun number available with 4 digits for each multiplier
+  maxMultiplier = 9999
+  # minimun number available with 8 digits for the result
+  minNumberForSelectedDigits = 10000000    
+else:
+  isASupportedDigitNumber = False
+
+if(isASupportedDigitNumber):  
+  # Loop for getting each possible left multiplier
+  for leftMultiplier in range(minMultiplier,maxMultiplier+1): # since the stop number(maxMultiplier) is not included then we add 1 to it
+      # Loop for getting each possible right multiplier
+      for rightMultiplier in range(minMultiplier,maxMultiplier+1): # since the stop number(maxMultiplier) is not included then we add 1 to it
+        #Now we get the result for the current multiplication
+        result = leftMultiplier*rightMultiplier
+        # We just need to analyze these results that are greater than the minimun number allowed for the selected digits   
+        if( result >= minNumberForSelectedDigits ):
+          #convert the multiplier Integer values into a single String in order to get the complete digits
+          multiplierDigits =  str(leftMultiplier) + str(rightMultiplier)
+          # Put each digit found in the result and in the multipliers into separated arrays for future evaluation
+          listOfResultDigits = list(str(result))
+          listOfMultiplierDigits = list(multiplierDigits)
+          
+          # Time to check if the product contains each digit found in the given multipliers
+          # before starting the analysis we are gonna say that the result is invalid
+          validResult = False
+          # Iterate the list of multiplier digits (E.g. 1,5,9,3 for 15x93=1395 multiplication)
+          for multiplierDigit in listOfMultiplierDigits:
+            # If the multiplier digit is found in the list of result digits (E.g 1 is in 1395)
+            if (multiplierDigit in listOfResultDigits):
+              #remove the digit found from the result digits list (E.g 395)
+              listOfResultDigits.remove(multiplierDigit)
+              #so far it is a valid candidate
+              validResult = True
+            else:  
+               #if a multiplier digit is not present in the result then it is an invalid candidate
+               validResult = False
+               #it is not necessary to continue analyzing the curent multpliers, so let's continue with the next multpliers
+               break
+          # if it always was a valid result then we have got valid multipliers, let's print them!   
+          if(validResult):   
+            print (leftMultiplier, 'x', rightMultiplier, '=', result)  
+else:
+  print ("Your number of digits is not supported, try again!")
+  
+print ("Good bye!")
+
+______________________________________________________________________________
+
+#Program4: Exercise from Extra.pdf (4)
+
+#Write a program that prints numbers in a LCD format. The user will input two integers.
+#The first value (s) will be the size of the numbers (1 < s < 4) and 
+#the second value (n) will be the number to show (0 < n <99,999,999).
+#For the output use ( - ) and ( | ) to print the numbers. Every digit will need s+2 columns and 2s+3 rows.
+#There must be exactly one line in between each digit.
+
+def vertical_left_scaled(scale=1):
+    results = []
+    for _ in range(0, scale):
+        results.append(" |{} ".format(" " * scale))
+    return results
+
+def vertical_right_scaled(scale=1):
+    results = []
+    for _ in range(0, scale):
+        results.append("  {}|".format(" " * scale))
+    return results
+
+
+def vertical_left_and_right_scaled(scale=1):
+    results = []
+    for _ in range(0, scale):
+        results.append(" |{}|".format(" " * scale))
+    return results
+
+
+def horizontal_scaled(scale=1):
+    return "  {} ".format("_" * scale)
+
+def horizontal_blank(scale=1):
+    return "  {} ".format(" " * scale)
+
+def one(scale=1):
+    results = []
+    results.append(horizontal_blank(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    return results
+
+
+def two(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+
+def three(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+
+def four(scale=1):
+    results = []
+    results.append(horizontal_blank(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    return results
+
+def five(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+def six(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+def seven(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    return results
+
+def eight(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+def nine(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    results += vertical_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+def zero(scale=1):
+    results = []
+    results.append(horizontal_scaled(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_blank(scale))
+    results += vertical_left_and_right_scaled(scale)
+    results.append(horizontal_scaled(scale))
+    return results
+
+def create_function_list(num,scale):
+    func_list = []
+    for digit in num:
+        if digit == '0':
+            func_list.append(zero(scale))
+        elif digit == '1':
+            func_list.append(one(scale))
+        elif digit == '2':
+            func_list.append(two(scale))
+        elif digit == '3':
+            func_list.append(three(scale))
+        elif digit == '4':
+            func_list.append(four(scale))
+        elif digit == '5':
+            func_list.append(five(scale))
+        elif digit == '6':
+            func_list.append(six(scale))
+        elif digit == '7':
+            func_list.append(seven(scale))
+        elif digit == '8':
+            func_list.append(eight(scale))
+        elif digit == '9':
+            func_list.append(nine(scale))
+    return func_list
+
+def print_numbers(numbers):
+    zipped = list(zip(*numbers))
+    for tup in zipped:
+        text = ""
+        for element in tup:
+            text = text + element
+        print(text)
+
+scale = int(input('Pick ANY scale:'))
+num = str(input('Pick ANY number:'))
+
+print_numbers(create_function_list(num,scale))
+
+______________________________________________________________________________
+
+#Program5: Exercise from Extra.pdf (5)
+
+#A common error when typing is to click the key right of the correct position.
+#Write a program that ask a user for a message and it shifts the original value to the left letter in a keyboard.
+#(expect for Q, A and Z). Assume that all the letters are in CAPS  
+#Input: U KUJW XISUBF 
+#Output: I LIKE CODING 
+
+print('Program5 Extra. The program asks the user for a message and it shifts the original value to the left letter in a keyboard. (expect for Q, A and Z).\n')
+
+keyboard = {'P' : 'O', 'O' : 'I', 'I' : 'U', 'U' : 'Y', 'Y' : 'T', 'T' : 'R', 'R' : 'E', 'E' : 'W', 'W' : 'Q', 'Q' : 'Q',
+            'L' : 'K', 'K' : 'J', 'J' : 'H', 'H' : 'G', 'G' : 'F', 'F' : 'D', 'D' : 'S', 'S' : 'A', 'A' : 'A',
+            'M' : 'N', 'N' : 'B', 'B' : 'V', 'V' : 'C', 'C' : 'X', 'X' : 'Z', 'Z' : 'Z', ' ' : ' '}
+
+message = input('Enter your message: ')
+messageShifted = ''
+for ch in message:
+  messageShifted += keyboard[ch.upper()] + '' 
+print(messageShifted)
+
+______________________________________________________________________________
+
+#Program1: Exercise from book (Chapter4:P3)
+
+#Python program that prompts the user for a list of integers and stores them in a list.
+#For all values that are greater than 100, the string "over" is stored instead.
+#The program displays the resulting list.
+
+print('Program1 Book. Python program that prompts the user for a list of integers and stores them in a list. \nFor all values that are greater than 100, the string "over" is stored instead. \nThe program displays the resulting list.')
+print('\n')
+
+#Empty list so we can storage the values
+intList = []
+done = 'done'
+
+print('Enter integers, one at a time, when you are done enter "done" (without quotation marks)')
+print('\n')
+
+usInp = input('Enter: ')
+# We need to know if the user is done
+# While the user is not done...
+while usInp != done:
+    # We need to convert the values from string to integers so we can evaluate them
+    intNum = int(usInp)
+    # If the integer the user entered is less than or equal to 100 we are going to add it to our intList
+    if intNum <= 100:
+        intList.append(intNum)
+    # If its greater than we will add 'over' instead 
+    else:
+        intList.append('over')
+    # We need to keep adding until the user is done!
+    usInp = input('Enter: ')
+print(intList)
+
+______________________________________________________________________________
+
+#Program2: Exercise from book (Chapter4:P4)
+
+#Python program that prompts the user to enter a list of first names and stores them in a list. 
+#The program displays how many times the letter "a" appears within the list.
+
+print('Program2 Book. Python program that prompts the user to enter a list of first names and stores them in a list. \nThe program displays how many times the letter "a" appears within the list.')
+print('\n')
+
+# Empty list so we can storage the values
+nameList = []
+done = 'done'
+
+print('Enter names, one at a time, when you are done enter "done" (without quotation marks)')
+print('\n')
+
+usInp = input('Enter: ')
+# We need to know if the user is done
+# While the user is not done...
+while usInp != done:
+    # We are going to add the names to our empty list nameList
+    nameList.append(usInp)
+    # We need to keep adding until the user is done
+    usInp = input('Enter: ')
+
+# Now we need to know how many "a's" there are in the list of names
+def countOfAs(nameList):
+    # We need a variable to storage th enumber of a's
+    num = 0
+    # now we are going to iterate
+    for i in range(0,len(nameList)):
+        for ch in nameList[i]:
+            if ch == 'a' or ch == 'A':
+                num = num + 1
+    print('\nThe letter "a" appears', num, 'times in the list of names entered')
+
+countOfAs(nameList)
+
+______________________________________________________________________________
+
+#Program3: Exercise from book (Chapter4:D1). The program should identify if the message is in Morse cose or in English
+# Python program that allows a user to type in a message and have it converted into Morse code
+# and also enter Morse code and have it converted back to the original message.
+print('Program3 Book. Python program that allows a user to type in a message and have it converted into Morse code, and also enter Morse code and have it converted back to the original message.')
+print('\n')
+
+morseCodeAlphabet = {'A' : '.-', 'B' : '-...', 'C' : '-.-.', 'D' : '-..', 'E' : '.', 'F' : '..-.', 
+                     'G' : '--.', 'H' : '....', 'I' : '..', 'J' : '.---', 'K' : '-.-', 'L' : '.-..', 
+                     'M' : '--', 'N' : '-.', 'O' : '---', 'P' : '.--.', 'Q' : '--.-', 'R' : '.-.', 
+                     'S' : '...', 'T' : '-', 'U' : '..-', 'V' : '...-', 'W' : '.--', 'X' : '-..-', 
+                     'Y' : '-.--', 'Z' : '--..', '.' : '\n', ',' : '',' ' : '/', ' \n' : '//'}
+
+inverseMorseCodeAlphabet = dict((v,k) for (k,v) in morseCodeAlphabet.items())
+
+def normalToMorseCode():
+  message = input('Enter your message: ')
+  messageInMorseCode = ''
+  words = message.split()
+  for word in words:
+    for ch in word:
+      messageInMorseCode += morseCodeAlphabet[ch.upper()] + 2*' ' 
+  print('\nYour original message in Morse code is: \n', messageInMorseCode)
+
+
+def morseCodeToNormal():
+  message = input('Enter your message using dots and dashes (separate each word with a space and a slash and each sentence with a space and a double slash): ')
+  for ch in message.split():
+    letter = inverseMorseCodeAlphabet.get(ch)
+    print(letter)
+  
+print('Enter "NORMAL" (without quotation marks) if you are going to enter a normal message or "MORSE" (without quotation marks) if you are going to enter a message in Morse code... ')
+messageType = input('\n')
+print('\n')
+
+messageType = messageType.upper()
+
+if messageType == 'NORMAL':
+  normalToMorseCode()
+elif messageType == 'MORSE':
+  print(morseCodeToNormal())
+  print('Still working on it!')
+else:
+  print('Invalid entry!')
+
+______________________________________________________________________________
+
+#Program4: Exercise from book (Chapter5:D1)
+#This program will convert measures entered in a certain unit to any different unit you choose
+
+print('Program4 Book. This program will convert measures entered in a certain unit to any different unit you choose.')
+print('\n')
+print('Units:')
+print('mm(millimeters), cm(centimeters), m(meters), km(kilometers) \nin(inches), ft(feet), yds(yards), mi(miles)')
+print('\n')
+print('Please enter measurement like "number unit" (e.g. 10 ft)')
+
+blankSpace = ' '
+numbers = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+units = ('mm', 'cm', 'm', 'km', 'in', 'ft', 'yds', 'mi')
+conversionKey = (1, 100, 1000, 1000000, 25.4, 304.8, 914.4, 1.609344e6)
+
+# We have to check if the what the user enter is correct
+def getAndConfirmMeasurement():
+  # so we are going to say input is invalid and then see if it is correct
+  validInput = False
+  while not validInput:
+    measurement = input('Enter your measurement: ')
+    # We check if the user wrote the input as we requested
+    if not blankSpace in measurement or measurement.index(blankSpace) == 0 or measurement.index(blankSpace) == len(measurement) - 1:
+      print('Enter measurement like "number unit" (e.g. 10 ft)')
+    # If the input is correct we are going to split it in the number and the units
+    else:
+      number = measurement[0:measurement.index(blankSpace)]
+      firstUnits = measurement[measurement.index(blankSpace) + 1:]
+      # Now we are going to check if the number entered is correct
+      # we are going to say the numeric value is valid and then see if this is true
+      invalidNumericInput = False
+      # this variable is only going to help us check the index
+      x = 0
+      while not invalidNumericInput and x < len(number):
+        if number[x] not in numbers + ('.',):
+          print('Invalid numeric value')
+          print('Enter measurement like "number unit" (e.g. 10 ft)')
+          invalidNumericInput = True
+        else:
+          x += 1
+      # so if our numeric value is valid we have to check that our units are valid too
+      if not invalidNumericInput:
+        # we are going to say the units are valid and see if this is true
+        invalidUnits = False
+        if firstUnits not in units:
+          print('Invalid units')
+          print('Enter measurement like "number unit" (e.g. 10 ft)')
+          print('Units must be one of this: \nmm, cm, m, km, in, ft, yds, mi')
+          invalidUnits = True
+      # if the units and the numeric value are valid then we can say the input is valid
+      # and we can return the values we will need
+      if not invalidNumericInput and not invalidUnits:
+        validInput = True
+        return(int(number), firstUnits)
+
+# Now the function to actual convert the measurements
+def conversion(currentMeasurement, currentUnits, newUnits, unitKeyInfo):
+  firstUnits = unitKeyInfo[0]
+  conversionKey = unitKeyInfo[1]
+  currentConversionFactor = conversionKey[firstUnits.index(currentUnits)]
+  newConversionFactor = conversionKey[firstUnits.index(newUnits)]
+  newMeasurement = (currentConversionFactor * currentMeasurement) / newConversionFactor
+  print(currentMeasurement, currentUnits, '=', format(newMeasurement, '.2f'), newUnits)
+
+# now we asign values returned in the first function
+measurement, firstUnits = getAndConfirmMeasurement()
+
+# we need to know to which units we are goin to convert the measure
+unitsToConvert = input('Enter units to convert: ')
+# we need to confirm the units entered are inside our units list
+while unitsToConvert not in units:
+  print('Invalid units')
+  print('Units must be one of this: \nmm, cm, m, km, in, ft, yds, mi')
+  print('Please reenter')
+  unitsToConvert = input('Enter units to convert: ')
+
+# We have to call the function in order to convert
+conversion(measurement, firstUnits, unitsToConvert, (units, conversionKey))
+
+______________________________________________________________________________
+#Program5: Exercise from book (Chapter5:D2)
+
+#GPA Projection Program
+#Develop and test a Python program that lets the user enter their current cumulative GPA, their total cred-
+#its earned, and the number of credits they are currently taking. The program should then request from the
+#user a target cumulative GPA that they wish to achieve, and display the GPA of the current semester
+#needed to achieve it.
+
+print('Program5 Book. This program will determine the current semester GPA you will need to obtain a specific cumulative GPA.')
+print('\n')
+
+cumulativeGpa = float(input('Enter your current cumulative GPA: '))
+totalCredits = int(input('Enter total number of credits earned: '))
+currentCredits = (int(input('Enter total number of credits currently taking: ')))
+targetCumulativeGpa = float(input('Enter target cummulative GPA you wish to achieve: '))
+
+requiredSemesterGpa = (targetCumulativeGpa * (totalCredits + currentCredits) - (cumulativeGpa * totalCredits)) / currentCredits
+if requiredSemesterGpa > 4.0:
+ 	highest_cumulative_gpa = (cumulativeGpa * totalCredits + 4.0 * currentCredits) / (totalCredits + currentCredits)
+ 	print('\nThe required semester Gpa for this semester for you to obtain your target should be', requiredSemesterGpa, '\nThe highest cummulative GPA you can achieve this semester is', format(highest_cumulative_gpa, '.2f'))
+else:
+ 	print('\nIn order to attain a new cumulative GPA of',targetCumulativeGpa, 'your GPA this semester must be',
+ 	format(requiredSemesterGpa, '.2f'), 'or better.')
+
+______________________________________________________________________________
+
+#Program6: Exercise from book (Chapter5:D3)
+
+#Tic-Tac-Toe Two-Player Program
+#Develop and test a Python program that lets two players play tic-tac-toe. Let player 1 be X and player 2
+#be O. Devise a method for each player to indicate where they wish to place their symbol. The program
+#should terminate if either there is a winner, or if the game results in a tie. The tic-tac-toe board should be
+#displayed after every move as shown below.
+
+print('Program6 Book. Python program that lets two players play tic-tac-toe.')
+print('\n')
+
+def gameTicTacToe():
+  emptyString = ''
+  board = [emptyString for i in range(1, 10)]
+  locations = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  end = False
+  combinationsForWinning = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6))
+
+  def draw():
+    print(locations[0], locations[1], locations[2])
+    print(locations[3], locations[4], locations[5])
+    print(locations[6], locations[7], locations[8])
+    print()
+    
+  def showBoard(board):
+    for i in range(0, len(board)):
+      sym = board[i]
+      if sym == emptyString:
+        sym = '-'
+      print(format(sym, '^3'), end='')
+      if (i + 1) % 3 == 0:
+        print()
+    print()
+
+  def p1():
+    n = numberChoice()
+    if locations[n] == 'X' or locations[n] == 'O':
+      print("\nThat location is already used")
+      p1()
+    else:
+      locations[n] = 'X'
+      board[n] = 'X'
+
+  def p2():
+    n = numberChoice()
+    if locations[n] == 'X' or locations[n] == 'O':
+      print("\nThat location is already used")
+      p2()
+    else:
+      locations[n] = 'O'
+      board[n] = 'O'
+
+  def numberChoice():
+    while True:
+      while True:
+        a = input()
+        try:
+          a  = int(a)
+          a -= 1
+          if a in range(0, 9):
+            return a
+          else:
+            print('\nThat number is not on the board')
+            continue
+        except ValueError:
+          print('\nThat is not a number')
+          continue
+
+  def determineWinner():
+    count = 0
+    for a in combinationsForWinning:
+      if locations[a[0]] == locations[a[1]] == locations[a[2]] == 'X':
+        print('Player 1 Wins!\n')
+        print('Congratulations!\n')
+        return True
+      elif locations[a[0]] == locations[a[1]] == locations[a[2]] == 'O':
+        print('Player 2 Wins!\n')
+        print('Congratulations!\n')
+        return True
+    for a in range(9):
+      if locations[a] == 'X' or locations[a] == 'O':
+        count += 1
+        if count == 9:
+          print('It is a tie!\n')
+          return True
+
+  #Now lets start the game
+  print('Select your position using the board with the positions shown below.\n')
+  draw()
+  print('Player 1 is the X. \nPlayer 2 is the O.\n')
+  while not end:
+    showBoard(board)
+    end = determineWinner()
+    if end == True:
+      break
+    print("Player 1 choose your position")
+    p1()
+    print()
+    showBoard(board)
+    end = determineWinner()
+    if end == True:
+      break
+    print("Player 2 choose your position")
+    p2()
+    print()
+
+gameTicTacToe()
+
+______________________________________________________________________________
+
+#Program7: Exercise from book (Chapter5:D4)
+
+#Tic-Tac-Toe Automated Play
+#Develop and test a Python program that plays tic-tac-toe against the user. Develop an appropriate strategy
+#of play and implement it in your program. The program should be designed to allow the user to continue
+#to play new games until they decide to quit. The program should display the total number of wins by the
+#computer versus the player at the start of each new game.
+
+print('Program7 Book. Python program that lets tyou play against the computer tic tact toe')
+print('\n')
+
+def gameTicTacToe():
+  emptyString = ''
+  board = [emptyString for i in range(1, 10)]
+  locations = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  end = False
+  combinationsForWinning = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6))
+
+  def draw():
+    print(locations[0], locations[1], locations[2])
+    print(locations[3], locations[4], locations[5])
+    print(locations[6], locations[7], locations[8])
+    print()
+    
+  def showBoard(board):
+    for i in range(0, len(board)):
+      sym = board[i]
+      if sym == emptyString:
+        sym = '-'
+      print(format(sym, '^3'), end='')
+      if (i + 1) % 3 == 0:
+        print()
+    print()
+
+  def p1():
+    n = numberChoice()
+    if locations[n] == 'X' or locations[n] == 'O':
+      print("\nThat location is already used")
+      p1()
+    else:
+      locations[n] = 'X'
+      board[n] = 'X'
+
+  from random import randint
+  def p2():
+    n = randint(0,10)
+    if locations[n] == 'X' or locations[n] == 'O':
+      print("\nThat location is already used")
+      p2()
+    else:
+      locations[n] = 'O'
+      board[n] = 'O'
+
+  def numberChoice():
+    while True:
+      while True:
+        a = input()
+        try:
+          a  = int(a)
+          a -= 1
+          if a in range(0, 9):
+            return a
+          else:
+            print('\nThat number is not on the board')
+            continue
+        except ValueError:
+          print('\nThat is not a number')
+          continue
+
+  def determineWinner():
+    count = 0
+    for a in combinationsForWinning:
+      if locations[a[0]] == locations[a[1]] == locations[a[2]] == 'X':
+        print('You Win!\n')
+        print('Congratulations!\n')
+        return True
+      elif locations[a[0]] == locations[a[1]] == locations[a[2]] == 'O':
+        print('Computer Wins!\n')
+        return True
+    for a in range(9):
+      if locations[a] == 'X' or locations[a] == 'O':
+        count += 1
+        if count == 9:
+          print('It is a tie!\n')
+          return True
+
+  #Now lets start the game
+  print('Select your position using the board with the positions shown below.\n')
+  draw()
+  print('Player 1 is the X. \nPlayer 2 is the O.\n')
+  while not end:
+    showBoard(board)
+    end = determineWinner()
+    if end == True:
+      break
+    print("Choose your position")
+    p1()
+    print()
+    showBoard(board)
+    end = determineWinner()
+    if end == True:
+      break
+    print("Computer chose position")
+    p2()
+    print()
+
+gameTicTacToe()
